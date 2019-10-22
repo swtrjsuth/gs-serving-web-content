@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
 					sh "mkdir -p build/owasp"
-					dependencycheck additionalArguments: '--project springhello --scan ./ --out build/owasp/dependency-check-report.xml --format XML'
+					sh 'dependency-check.sh --project springhello --scan ./ --out build/owasp/dependency-check-report.xml --format XML'
 				}
 			}
 		}
