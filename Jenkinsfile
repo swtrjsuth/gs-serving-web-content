@@ -5,7 +5,7 @@ pipeline {
     tools {
         // Note: this should match with the tool name configured in your jenkins instance (JENKINS_URL/configureTools/)
         maven "Maven 3.6.2"
-		dependencycheck "Dependency Check 5.2.2"
+		dependency-check "Dependency Check 5.2.2"
     }
     environment {
         // This can be nexus3 or nexus2
@@ -38,8 +38,12 @@ pipeline {
             }
         }
 		stage("dependency check") {
-			sh "mkdir -p build/owasp"
-			dependencycheck additionalArguments: '--project springhello --scan ./ --out build/owasp/dependency-check-report.xml --format XML'
+            steps {
+                script {
+					sh "mkdir -p build/owasp"
+					dependencycheck additionalArguments: '--project springhello --scan ./ --out build/owasp/dependency-check-report.xml --format XML'
+				}
+			}
 		}
         stage("publish to nexus") {
             steps {
